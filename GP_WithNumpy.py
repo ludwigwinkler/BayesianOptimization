@@ -1,8 +1,5 @@
 import numpy as np
 np.core.arrayprint._line_width = 300
-import scipy
-import sklearn
-import sklearn.metrics.pairwise
 import matplotlib.pyplot as plt
 
 from sklearn.gaussian_process import GaussianProcessRegressor
