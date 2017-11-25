@@ -212,11 +212,11 @@ class GPO:
 
 ###########################################################
 
-starting_point = np.array([[1, 4, 7, 9.5]]).reshape((-1, 1))
+starting_point = np.array([[1]]).reshape((-1, 1))
 
 gpo = GPO(starting_point, f, df)
-gpo.plot()
-# for _ in range(10):
-#         gpo.search_input_space_for_maximum()
-#         gpo.plot_with_optimization_info()
+#gpo.plot()
+for _ in range(10):
+        gpo.search_input_space_for_maximum()
+        gpo.plot_with_optimization_info()
 
