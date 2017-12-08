@@ -1,4 +1,4 @@
- import numpy as np
+import numpy as np
 np.core.arrayprint._line_width = 300
 import matplotlib.pyplot as plt
 from scipy.stats import norm
