@@ -1,40 +1,53 @@
-import numpy as np
+ import numpy as np
 np.core.arrayprint._line_width = 300
 import matplotlib.pyplot as plt
-
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import RBF
+from scipy.stats import norm
 
 
 def f(x):
         return x*np.sin(x)
 
 def df(x):
-        return np.sin(x) + x*np.cos(x)
+        return -(np.sin(x) + x*np.cos(x))
 
-class GP:
+class GPO:
         '''
         X: (samples, features)
         y: (samples,1)
         '''
-        def __init__(self, _X=None, _function=None, _dfunction=None):
+        def __init__(self, _starting_point=None, _function=None, _dfunction=None, _use_derivative_obs=True):
 
-                self.X = _X #  Observed datapoints (features x samples)
+                self.X = np.array((_starting_point)) #  Observed datapoints (features x samples)
                 self.function = _function #  True, deterministic function
                 self.dfunction = _dfunction #  Derivative function (e.g. f(x)=x*sin(x) -> df(x) = sin(x) + x*cos(x))
                 self.y = self.function(self.X) #  Observed targets (samples x 1)
-                self.dy = -self.dfunction(self.X)
+                self.dy = self.dfunction(self.X)
                 self.sigma_kernel = 10
-                self.noise = 1e-5
+                self.noise = 1e-10
 
+                # Construct kernel matrix with the given observation points
                 self.K = self.RBF_Kernel(self.X, self.X.T)
                 self.K_inv = self.invert_matrix(self.K, _noise= 1e-10)
                 self.K_inv_noise = self.invert_matrix(self.K, _noise= 1e-10)
 
+                # Construct the kernel matrix with the given observation points and their derivatives
+
                 self.K_with_derivatives = self.construct_K_with_derivatives()
                 self.K_with_derivatives_inv = self.invert_matrix(self.K_with_derivatives, _noise=1e-10)
 
-                self.plotting_resolution = 100
+                # Values relevant to plotting, xmin, xmax values and resolution of the evaluation points between xmin and xmax
+                self.plotting_xmin = 0
+                self.plotting_xmax = 15
+                self.plotting_resolution = 200
+                self.plotting_xs = np.linspace(self.plotting_xmin, self.plotting_xmax, self.plotting_resolution).reshape((-1, 1))
+
+                # Values and variables relevant to the optimization part
+                self.use_derivative_obs = _use_derivative_obs
+                self.mean = None
+                self.sigma = None
+                self.EI = None
+                self.UCB = None
+
 
         def construct_K_with_derivatives(self):
 
@@ -49,22 +62,55 @@ class GP:
 
                 return K_with_derivatives
 
-        def predict(self, _xs):
+        def search_input_space_for_maximum(self):
 
-                k = self.RBF_Kernel(_xs, self.X.T)
-                k_starstar = self.RBF_Kernel(_xs, _xs.T)
+                if self.use_derivative_obs==True:
+                        self.predict_with_derivatives()
+                if self.use_derivative_obs==False:
+                        self.predict()
+
+                optimum = np.max(self.function(self.X))
+
+                Z = (self.mean - optimum)/self.sigma
+                EI = (self.mean - optimum) * norm.cdf(Z) + self.sigma * norm.pdf(Z)
+                EI[EI<=0] = 0
+                self.EI = EI
+                point_with_max_EI = np.array([np.argmax(EI)/(self.plotting_xmax - self.plotting_xmin)]).reshape((1,1))
+
+                UCB = self.mean + 1.96*self.sigma
+                # point_with_max_UCB = np.array([np.argmax(UCB)/(self.plotting_xmax - self.plotting_xmin)*self.plotting_resolution]).reshape((1,1))
+                self.UCB = UCB
+                point_with_max_UCB = np.array([np.argmax(UCB)/(self.plotting_resolution)*(self.plotting_xmax-self.plotting_xmin)]).reshape((1,1))
+
+                # Update internal variables
+                self.X = np.concatenate((self.X, point_with_max_UCB), axis=0)
+                self.y = np.concatenate((self.y, self.function(point_with_max_UCB)), axis=0)
+                self.dy = np.concatenate((self.dy, self.dfunction(point_with_max_UCB)), axis=0)
+
+                # Update Kernel Matrix
+                self.K = self.RBF_Kernel(self.X, self.X.T)
+                self.K_inv = self.invert_matrix(self.K, _noise= 1e-10)
+                self.K_inv_noise = self.invert_matrix(self.K, _noise= 1e-10)
+                self.K_with_derivatives = self.construct_K_with_derivatives()
+                self.K_with_derivatives_inv = self.invert_matrix(self.K_with_derivatives, _noise=1e-10)
+
+        def predict(self):
+
+                k = self.RBF_Kernel(self.plotting_xs, self.X.T)
+                k_starstar = self.RBF_Kernel(self.plotting_xs, self.plotting_xs.T)
 
                 mean = k.dot(self.K_inv).dot(self.y)
                 sigma = np.diag(k_starstar - k.dot(self.K_inv).dot(k.T)).reshape((-1,1))
 
-                return mean, sigma
+                self.mean = mean
+                self.sigma = sigma
 
-        def predict_with_derivatives(self, _xs):
+        def predict_with_derivatives(self):
 
-                k = self.RBF_Kernel(_xs, self.X.T)
-                k_derivative = self.RBF_Kernel_onederivative(_xs, self.X.T)
+                k = self.RBF_Kernel(self.plotting_xs, self.X.T)
+                k_derivative = self.RBF_Kernel_onederivative(self.plotting_xs, self.X.T)
                 k_with_derivatives = np.concatenate((k,k_derivative), axis=1)
-                k_starstar = self.RBF_Kernel(_xs, _xs.T)
+                k_starstar = self.RBF_Kernel(self.plotting_xs, self.plotting_xs.T)
 
                 y_with_derivatives = np.concatenate((self.y, self.dy),axis=0)
 
@@ -72,41 +118,23 @@ class GP:
                 # print(k_with_derivatives.shape, self.K_with_derivatives_inv.shape, y_with_derivatives.shape, '=', mean_with_derivatives.shape)
                 sigma_with_derivatives = np.diag(k_starstar - k_with_derivatives.dot(self.K_with_derivatives_inv).dot(k_with_derivatives.T)).reshape((-1,1))
 
-                return mean_with_derivatives, sigma_with_derivatives
+                self.mean = mean_with_derivatives
+                self.sigma = sigma_with_derivatives
 
-        def plot(self, _xmin = 0, _xmax = 10):
-                xs = np.linspace(_xmin, _xmax, self.plotting_resolution).reshape((-1,1))
+        def plot(self):
 
-                # mean, sigma = self.predict(xs)
-                # fig = plt.figure(figsize=(10,10))
-                # plt.title('GP')
-                # plt.plot(xs, self.function(xs), 'r:', label=u'$f(x) = x\,\sin(x)$') #  The true function
-                # plt.plot(self.X, self.y, 'r.', markersize=10)#, label=u'Observations') #  Observations so far
-                # # plt.plot(_x_pred, _utility, 'b:', label=u'utility') #  Utility function: predicted_mean - currently_best_value + 1.96*standard_deviation
-                # # # plt.plot([np.argmax(utility)/100], [utility[np.argmax(utility)]], 'r*', markersize=10) #  New predicted max which will be evaluated
-                # plt.plot(xs, mean, 'b-', label=u'Mean Prediction') #  Predicted mean
-                # plt.fill(np.concatenate([xs, xs[::-1]]),
-                #          np.concatenate([(mean - 1.9600 * sigma), (mean + 1.9600 * sigma)[::-1]]),
-                #          alpha=.5,
-                #          fc='b',
-                #          ec='None',
-                #          label='95% confidence interval')
-                # plt.xlabel('$x$')
-                # plt.ylabel('$f(x)$')
-                # plt.ylim(-10, 20)
-                # plt.xticks(np.arange(0,10,1))
-                # plt.yticks(np.arange(-5,15,1))
-                # plt.grid()
-                # plt.legend(loc='upper left')
+                if self.use_derivative_obs==True:
+                        self.predict_with_derivatives()
+                if self.use_derivative_obs==False:
+                        self.predict()
 
-                mean_with_derivatives, sigma_with_derivatives = self.predict_with_derivatives(xs)
-                fig = plt.figure(figsize=(10,10))
+                fig = plt.figure(figsize=(30,30))
                 plt.title('GP with Derivative Information')
-                plt.plot(xs, self.function(xs), 'r:', label=u'$f(x) = x\,\sin(x)$') #  The true function
+                plt.plot(self.plotting_xs, self.function(self.plotting_xs), 'r:', label=u'$f(x) = x\,\sin(x)$') #  The true function
                 plt.plot(self.X, self.y, 'r.', markersize=10)#, label=u'Observations') #  Observations so far
-                plt.plot(xs, mean_with_derivatives, 'b', label=u'Mean with Derivatives Prediction') #  Predicted mean
-                plt.fill(np.concatenate([xs, xs[::-1]]),
-                         np.concatenate([(mean_with_derivatives - 1.9600 * sigma_with_derivatives), (mean_with_derivatives + 1.9600 * sigma_with_derivatives)[::-1]]),
+                plt.plot(self.plotting_xs, self.mean, 'b', label=u'Mean with Derivatives Prediction') #  Predicted mean
+                plt.fill(np.concatenate([self.plotting_xs, self.plotting_xs[::-1]]),
+                         np.concatenate([(self.mean - 1.9600 * self.sigma), (self.mean + 1.9600 * self.sigma)[::-1]]),
                          alpha=.5,
                          fc='b',
                          ec='None',
@@ -114,7 +142,31 @@ class GP:
                 plt.xlabel('$x$')
                 plt.ylabel('$f(x)$')
                 plt.ylim(-10, 20)
-                plt.xticks(np.arange(0,10,1))
+                plt.xticks(np.arange(self.plotting_xmin,self.plotting_xmax,1))
+                plt.yticks(np.arange(-5,15,1))
+                plt.grid()
+                plt.legend(loc='upper left')
+                plt.show()
+
+        def plot_with_optimization_info(self):
+
+                fig = plt.figure(figsize=(30,30))
+                plt.title('GP with Derivative Information')
+                plt.plot(self.plotting_xs, self.function(self.plotting_xs), 'r:', label=u'$f(x) = x\,\sin(x)$') #  The true function
+                plt.plot(self.plotting_xs, self.UCB, 'g', label=u'UCB') #  The true function
+                plt.plot(self.X[:-1,:], self.y[:-1,:], 'r.', markersize=10)#, label=u'Observations') #  Observations so far
+                plt.plot(self.X[-1,:], self.y[-1,:], 'g*', markersize=10)#, label=u'Observations') #  Observations so far
+                plt.plot(self.plotting_xs, self.mean, 'b', label=u'Mean with Derivatives Prediction') #  Predicted mean
+                plt.fill(np.concatenate([self.plotting_xs, self.plotting_xs[::-1]]),
+                         np.concatenate([(self.mean - 1.9600 * self.sigma), (self.mean + 1.9600 * self.sigma)[::-1]]),
+                         alpha=.5,
+                         fc='b',
+                         ec='None',
+                         label='95% confidence interval')
+                plt.xlabel('$x$')
+                plt.ylabel('$f(x)$')
+                plt.ylim(-10, 20)
+                plt.xticks(np.arange(self.plotting_xmin,self.plotting_xmax,1))
                 plt.yticks(np.arange(-5,15,1))
                 plt.grid()
                 plt.legend(loc='upper left')
@@ -147,50 +199,24 @@ class GP:
                 :return: 
                 '''
 
-                derivative_part = -np.square((_x-_y))+1
+                derivative_part = 1-np.square((_x-_y))
                 kernel = 2*np.exp(-0.5*np.square(_x-_y))
 
                 return np.multiply(derivative_part, kernel)
 
-        def invert_matrix(self, _matrix, _noise=1e-5):
+        def invert_matrix(self, _matrix, _noise=1e-10):
 
                 return np.linalg.inv(_matrix + _noise*np.eye(_matrix.shape[0]))
 
 
 
-def SKLearn_GP():
-        x = np.linspace(0,10,1000).reshape((-1,1))
-        kernel = RBF(10, (0.01, 100)) #  Defining the kernel
-        sklearn_gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=9, alpha=1e-10, optimizer=None) #  Initializing the GP regressor
-        sklearn_obs = np.array([7., 1.]).reshape((-1,1)) #  Setting a first obs as the start for the search
+###########################################################
 
-        sklearn_gp.fit(sklearn_obs, f(sklearn_obs).ravel())
-        y_pred, sigma = sklearn_gp.predict(x, return_std=True)
+starting_point = np.array([[7]]).reshape((-1, 1))
 
-        fig = plt.figure(figsize=(10,10))
-        plt.plot(x, f(x), 'r:', label=u'$f(x) = x\,\sin(x)$') #  The true function
-        plt.plot(sklearn_obs, f(sklearn_obs).ravel(), 'r.', markersize=10, label=u'Observations') #  Observations so far
-        # plt.plot(_x_pred, _utility, 'b:', label=u'utility') #  Utility function: predicted_mean - currently_best_value + 1.96*standard_deviation
-        # plt.plot([np.argmax(utility)/100], [utility[np.argmax(utility)]], 'r*', markersize=10) #  New predicted max which will be evaluated
-        plt.plot(x, y_pred, 'b-', label=u'Prediction') #  Predicted mean
-        plt.fill(np.concatenate([x, x[::-1]]),
-                 np.concatenate([y_pred - 1.9600 * sigma, (y_pred + 1.9600 * sigma)[::-1]]),
-                 alpha=.5,
-                 fc='b',
-                 ec='None',
-                 label='95% confidence interval')
-        plt.xlabel('$x$')
-        plt.ylabel('$f(x)$')
-        plt.ylim(-10, 20)
-        plt.xticks(np.arange(0,10,1))
-        plt.yticks(np.arange(-10,20,1))
-        plt.grid()
-        plt.legend(loc='upper left')
-        plt.title('Scikit-Learn')
-
-
-X = np.array([[ 1., 7.]]).T
-dfX = df(X)
-
-gp = GP(X, f, df)
-gp.plot()
+gpo = GPO(starting_point, f, df, _use_derivative_obs=False)
+gpo.plot()
+for _ in range(10):
+        gpo.search_input_space_for_maximum()
+        gpo.plot_with_optimization_info()
+        # gpo.plot()
