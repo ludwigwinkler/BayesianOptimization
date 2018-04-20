@@ -38,7 +38,7 @@ Given such a Gaussian distribution over the previous evaluations, information ca
 
 ## Gaussian Processes
 
-${x}_i, \{x\}_i$
+${x}_i, \left{ x \right}_i$
 
 In most situations where observations have many small independent components, their distribution tends towards the Gaussian distribution.
 Compared to other probability distributions, the Gaussian distribution is tractable and it's parameters have intuitive meaning.
