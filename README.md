@@ -43,12 +43,14 @@ Compared to other probability distributions, the Gaussian distribution is tracta
 The theory of the central limit theorem (CLT) makes the Gaussian distribution a versatile distribution which is used in numerous situations in science and engineering.
 
 A convenient property of the Gaussian distribution for a random variable $X$ is its complete characterization by its mean $$\mu$$ and variance $\Sigma$
+
 $$
 \begin{align}
      \mu &= \mathbb{E}[X] \\
      \Sigma &= \mathbb{E}[(X-\mu)^T(X-\mu)]
 \end{align}
 $$
+
 Mathematically, a multivariate Gaussian for a vector $\x \in \mathbb{R}^d$ is defined by its mean $\bm{\mu} \in \mathbb{R}^d$ and covariance function $\bm{\Sigma} \in \mathbb{R}^{d \times d}$:
 $$
 \begin{align}
