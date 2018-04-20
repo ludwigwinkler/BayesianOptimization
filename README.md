@@ -55,14 +55,14 @@ Mathematically, a multivariate Gaussian for a vector $x \in \mathbb{R}^d$ is def
 
 $$
 \begin{align}
-    \mathcal{N}(x | \mu, \Sigma}) &=
+    \mathcal{N}(x | \mu, \Sigma) &=
                \frac{1}{2}
 \end{align}
 $$
 
 $$
 \begin{align}
-          \mathcal{N}(x | \mu, \Sigma}) &=
+          \mathcal{N}(x | \mu, \Sigma) &=
                \frac{1}{\sqrt{(2 \pi)^d |\Sigma|^2}}
                \exp \left[
                -\frac{1}{2}
