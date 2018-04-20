@@ -55,7 +55,7 @@ Mathematically, a multivariate Gaussian for a vector $x \in \mathbb{R}^d$ is def
 
 $$
 \begin{align}
-    \mathcal{N}(x \ | \ \mu, \Sigma}) 
+    \mathcal{N}
 \end{align}
 $$
 
