@@ -54,7 +54,7 @@ $$
 Mathematically, a multivariate Gaussian for a vector $\x \in \mathbb{R}^d$ is defined by its mean $\bm{\mu} \in \mathbb{R}^d$ and covariance function $\bm{\Sigma} \in \mathbb{R}^{d \times d}$:
 $$
 \begin{align}
-          \mathcal{N}(\x \ | \ \bmu, \bm{\Sigma}) &=
+          \mathcal{N}(x \ | \ \mu, \Sigma}) &=
                \frac{1}{\sqrt{(2 \pi)^d |\bm{\Sigma}|^2}}
                \exp \left[
                -\frac{1}{2}
