@@ -52,6 +52,7 @@ $$
 $$
 
 Mathematically, a multivariate Gaussian for a vector $x \in \mathbb{R}^d$ is defined by its mean $\mu \in \mathbb{R}^d$ and covariance function $\Sigma \in \mathbb{R}^{d \times d}$:
+
 $$
 \begin{align}
           \mathcal{N}(x \ | \ \mu, \Sigma}) &=
@@ -67,6 +68,7 @@ $$
                \right] \label{eq:gausspropto}
 \end{align}
 $$
+
 A useful property of the Gaussian distribution is that its shape is determined by its mean and covariance in the exponential term.
 This allows us to omitt the normalization constant and determine the relevant mean and covariance terms from the exponential term, as seen in \eqref{eq:gausspropto}.
 
