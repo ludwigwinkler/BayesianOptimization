@@ -56,7 +56,7 @@ Mathematically, a multivariate Gaussian for a vector $x \in \mathbb{R}^d$ is def
 $$
 \begin{align}
     \mathcal{N}(x | \mu, \Sigma) &=
-               \frac{1}{\sqrt{2}}
+               \frac{1}{\sqrt{(2 \pi)^2}}
 \end{align}
 $$
 
