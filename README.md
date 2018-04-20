@@ -77,43 +77,55 @@ $$
 $$
 
 A useful property of the Gaussian distribution is that its shape is determined by its mean and covariance in the exponential term.
-This allows us to omitt the normalization constant and determine the relevant mean and covariance terms from the exponential term, as seen in \eqref{eq:gausspropto}.
+This allows us to omitt the normalization constant and determine the relevant mean and covariance terms from the exponential term.
 
+Let $y=f(x)$, where $x \in \mathbb{R}^d$ and $y \in \mathbb{R}$ be the function which we want to estimate with a Gaussian Process.
+Furthermore, let $\mathcal{D} = (X, y) = \{ (\x_i, y_i) \}_{i=0}^N$, with $X \in \mathbb{R}^{N \times d}$ and $y \in \mathbb{R}^{N}$, be our training observations of the function $f$.
+Lastly, let $\smash{\mathcal{D}_* = (X_*, y_*) = \{ (\x_j, y_j) \}_{j=0}^{N_*}}$, with $X_* \in \mathbb{R}^{N_* \times d}$ and $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of $y_* =f(X_s)$ for the function $f$.
 
-### Markdown5
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-$$
-a^2 + b^2 = c^2
-$$
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ludwigwinkler/BayesianOptimization/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+A Gaussian process is defined as a stochastic process, such that every finite collection of realizations $X=\{\x_i \}_{i=0}^N, \x_i \in \mathbb{R}^d$ of the random variables $X \sim \mathcal{N}(\ \cdot \ | \ \mu, \Sigma), X \in \mathbb{R}^d$ is a multivariate distribution.
+A constraint of Gaussian processes as they are used in machine learning, which can be relaxed in specific cases, is that they are assumed to have a zero mean.
+In order to compute a predictive distribution over $y_*$ we initially construct the joint distribution over the training observations $\mathcal{D} = (X,y)$ and test observations $\mathcal{D}_* = (X_*,y_*)$:
+\begin{align}
+     p(y_*, y, X_*, X) &= \frac{1}{\sqrt{(2 \pi)^{N+N_*} |\K|^2}}
+     \exp \left[
+     -\frac{1}{2}
+     \begin{bmatrix}
+          y \\
+          y_*
+     \end{bmatrix}^T
+     \begin{bmatrix}
+          K_{\X\X} & K_{\X\Xs} \\
+          K_{\Xs\X} & K_{\Xs\Xs}
+     \end{bmatrix}^{-1}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}
+     \right] \\
+     &\propto
+     \exp \left[
+     -\frac{1}{2}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}^T
+     \begin{bmatrix}
+          K_{\X\X} & K_{\X\Xs} \\
+          K_{\Xs\X} & K_{\Xs\Xs}
+     \end{bmatrix}^{-1}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}
+     \right] \\
+     &\propto
+     \mathcal{N}
+     \left(
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix} \middle|
+     \mathbf{0}, \K
+     \right)
+\end{align}
