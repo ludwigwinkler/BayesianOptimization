@@ -1,3 +1,6 @@
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/ludwigwinkler/BayesianOptimization/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
