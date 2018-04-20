@@ -66,12 +66,12 @@ $$
                \frac{1}{\sqrt{(2 \pi)^d |\Sigma|^2}}
                \exp \left[
                -\frac{1}{2}
-               (\x-\mu)^T \Sigma^{-1}(\x-\mu)
+               (x-\mu)^T \Sigma^{-1}(x-\mu)
                \right] \\
                &\propto
                \exp \left[
                -\frac{1}{2}
-               (\x-\mu)^T \Sigma^{-1}(\x-\mu)
+               (x-\mu)^T \Sigma^{-1}(x-\mu)
                \right]
 \end{align}
 $$
