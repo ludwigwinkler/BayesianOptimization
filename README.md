@@ -38,8 +38,6 @@ Given such a Gaussian distribution over the previous evaluations, information ca
 
 ## Gaussian Processes
 
-${x}_i, \\{ x \\}_i$
-
 In most situations where observations have many small independent components, their distribution tends towards the Gaussian distribution.
 Compared to other probability distributions, the Gaussian distribution is tractable and it's parameters have intuitive meaning.
 The theory of the central limit theorem (CLT) makes the Gaussian distribution a versatile distribution which is used in numerous situations in science and engineering.
@@ -75,7 +73,7 @@ A useful property of the Gaussian distribution is that its shape is determined b
 This allows us to omitt the normalization constant and determine the relevant mean and covariance terms from the exponential term.
 
 Let $y=f(x)$, where $x \in \mathbb{R}^d$ and $y \in \mathbb{R}$ be the function which we want to estimate with a Gaussian Process.
-Furthermore, let $\mathcal{D} = (X, y) = x_i$, $ = {\{(x_i, y_i)\}}_i^N$, $x_{i=0}^N$, with $X \in$ $\mathbb{R}^{N d}$ and $y \in \mathbb{R}^{N}$, be our training observations of the function $f$.
+Furthermore, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$, with $X \in$ $\mathbb{R}^{N d}$ and $y \in \mathbb{R}^{N}$, be our training observations of the function $f$.
 Lastly, let $\smash{\mathcal{D}_{*} = (X_*, y_*) = \{ (\x_j, y_j) \}_{j=0}^{N_*}$, with $X_* \in \mathbb{R}^{N_* \times d}$ and $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of $y_* =f(X_s)$ for the function $f$.
 
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations $X=\{ x_i \}_{i=0}^N, x_i \in \mathbb{R}^d$ of the random variables $X \sim \mathcal{N}( \cdot  |  \mu, \Sigma), X \in \mathbb{R}^d$ is a multivariate distribution.
