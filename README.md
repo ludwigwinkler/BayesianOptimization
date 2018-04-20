@@ -56,16 +56,16 @@ Mathematically, a multivariate Gaussian for a vector $x \in \mathbb{R}^d$ is def
 $$
 \begin{align}
           \mathcal{N}(\x \ | \ \mu, \Sigma}) &=
-               \frac{1}{\sqrt{(2 \pi)^d |\bm{\Sigma}|^2}}
+               \frac{1}{\sqrt{(2 \pi)^d |\Sigma}|^2}}
                \exp \left[
                -\frac{1}{2}
-               (\x-\bmu)^T \bm{\Sigma}^{-1}(\x-\bmu)
-               \right] \label{eq:definitionofgaussian} \\
+               (\x-\mu)^T \Sigma^{-1}(\x-\mu)
+               \right] \\
                &\propto
                \exp \left[
                -\frac{1}{2}
-               (\x-\bmu)^T \bm{\Sigma}^{-1}(\x-\bmu)
-               \right] \label{eq:gausspropto}
+               (\x-\mu)^T \Sigma^{-1}(\x-\mu)
+               \right]
 \end{align}
 $$
 
