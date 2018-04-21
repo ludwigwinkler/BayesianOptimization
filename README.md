@@ -76,7 +76,11 @@ be our training observations of the function $f$.
 
 Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) $
 
-$ \mathcal{D}\_* = ( X\_* , y\_* ) $
+$ \mathcal{D}\_* = ( X\_* , y\_* ) = \{ ( x_*, y_* ) \} $
+
+$ \mathcal{D}\_* = ( X\_* , y\_* ) = \{ ( x_{*j}, y_{*j} ) \} $
+
+$ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( x_{*j}, y_{*j} ) \\} $
 
 $=(X_*, y_*) = \\{(x_{*i}, y_{*i})\\}_{i=0}^{N_*}$, $ X_* \in \mathbb{R}^{N_* \times d} $ and with
 
