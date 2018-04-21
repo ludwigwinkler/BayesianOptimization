@@ -74,9 +74,7 @@ with $X \in$ $\mathbb{R}^{N \times d}$
 and $y \in \mathbb{R}^{N}$, 
 be our training observations of the function $f$.
 
-Lastly, let $ \mathcal{D}_* $, 
-
-with $ X_* \in \mathbb{R}^{N_* \times d} $ and 
+Lastly, let `$ \mathcal{D}_* $`, `$ X_* \in \mathbb{R}^{N_* \times d} $` and with
 
 $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of 
 
