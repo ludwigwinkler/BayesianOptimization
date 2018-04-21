@@ -184,9 +184,12 @@ $$
 The block matrices $k(\X,\X) \in \mathbb{R}^{N \times N}, k(\X, \Xs) \in \mathbb{R}^{N \times N_*}, k(\Xs, \X) \in \mathbb{R}^{N_* \times N}$ and $k(\Xs, \Xs) \in \mathbb{R}^{N_* \times N_*}$ in \eqref{eq:covariance1} are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
 Furthermore both $k(\X,\X)$ and $k(\Xs,\Xs)$ are symmetric matrices and $k(\X,\Xs)$ and $k(\Xs,\X)$ are each others mutually transposed.
 
-Given the joint distribution $p(\ys, \y, \Xs, \X)$, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $p(\ys \ | \y, \Xs, \X)$.
-In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma in equations (\ref{eq:blockmatrixinversionlemma1} - \ref{eq:blockmatrixinversionlemma-1}) \cite{tylavskyblockmatrixinversionlemma} is used to compute the inverse of the covariance matrix \eqref{eq:covariance1}.
+Given the joint distribution $ p(y_*, y, X_*, X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y_*  \| y, X_*, X ) $ .
+In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma is used to compute the inverse of the covariance matrix.
+
 For ease of reading and brevity the respective block matrices were replaced by more easily readible variables in the following identity:
+
+$$
 \begin{align}
      \K^{-1}&= \begin{bmatrix}
           K_{\X\X} & K_{\X\Xs} \\
@@ -210,8 +213,12 @@ For ease of reading and brevity the respective block matrices were replaced by m
      \end{bmatrix} \label{eq:blockmatrixinversionlemma-1} \\
      \Sigma &= D-CA^{-1}B = K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}
 \end{align}
+
+$$
 Instead of computing the inverse of the entire matrix $\K$, which can be computationally expensive for large covariance matrices, the precision matrix $\K^{-1}$ can be computed block-wise with the block matrix inversion lemma.
 Given the precision matrix in block matrix notation, the inner product in the exponential term of the Gaussian distribution can be computed as a sum over the inner products with the independent block matrices:
+
+$$
 \begin{align}
      p(\ys, \y, \Xs, \X)
      &\propto
@@ -253,8 +260,12 @@ Given the precision matrix in block matrix notation, the inner product in the ex
      \right)
      \right] \label{eq:jointdist_innersumoverblockmatrices}
 \end{align}
-Since we are only interested in the posterior distribution $p(\ys \ | \y, \Xs, \X)$, terms which do not include $\ys$ in \eqref{eq:jointdist_innersumoverblockmatrices} can be moved into the normalization term.
-The conditional distribution can thus be simplified to %TODO minus in der zweiten Zeile?
+$$
+
+Since we are only interested in the posterior distribution $p(y_*  \| y, X_*, X)$, terms which do not include $y_*$ can be moved into the normalization term.
+The conditional distribution can thus be simplified to:
+
+$$
 \begin{align}
      p(\ys\ | \ \y, \Xs, \X)
      &\propto
@@ -282,6 +293,8 @@ The conditional distribution can thus be simplified to %TODO minus in der zweite
      \right)
      \right]
 \end{align}
+$$
+
 with the matrices $\Sigma$ being a symmetric matrix by construction, and $B$ and $C$ being each other transposed, namely $C^T=B$, which gives rise to the identity:
 \begin{align}
      (\y^TA^{-1}B\Sigma^{-1}\ys)^T
