@@ -89,46 +89,46 @@ In order to compute a predictive distribution over $ y\_* $ we initially constru
 
 $$
 \begin{align}
-     p(y\_*, y, X\_* , X) &= \frac{1}{\sqrt{(2 \pi)^{ N+N\_* } |K|^2}}
+     p(y\_*, y, X\_* , X) &= \frac{1}{\sqrt{(2 \pi)^{ N+N_* } |K|^2}}
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}^T
      \begin{bmatrix}
-          K\_{ XX } & K_{ X X\_* } \\
-          K_{ X\_* X } & K_{ X\_* X\_* }
+          K\_{ XX } & K_{ X X_* } \\
+          K_{ X_* X } & K_{ X_* X_* }
      \end{bmatrix}^{-1}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}
      \right] \\
      &\propto
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y_*
      \end{bmatrix}^T
      \begin{bmatrix}
-          K_{\X\X} & K_{\X\Xs} \\
-          K_{\Xs\X} & K_{\Xs\Xs}
+          K_{ X X } & K_{ X X_* } \\
+          K_{ X_* X} & K_{ X_* X_*}
      \end{bmatrix}^{-1}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y_*
      \end{bmatrix}
      \right] \\
      &\propto
      \mathcal{N}
      \left(
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y_*
      \end{bmatrix} \middle|
-     \mathbf{0}, \K
+     \mathbf{0}, K
      \right)
 \end{align}
 $$
