@@ -132,3 +132,179 @@ $$
      \right)
 \end{align}
 $$
+
+where the covariance matrix of the joint Gaussian distribution is given by
+
+$$
+\begin{align}
+     K=\begin{bmatrix}
+          K_{ X X} & K_{ X X_* } \\
+          K_{ X_* X} & K_{ X_* X_* }
+     \end{bmatrix}
+     =
+     \begin{bmatrix}
+          k( X, X) & k( X, X_*) \\
+          k(X_*, X) & k(X_*, X_*)
+     \end{bmatrix}
+\end{align}
+$$
+
+and $ k(x,x') $ is an kernel function $ k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$ that measures the similarity between two vectors $ x, x' \in \mathcal{X}$.
+We can observe from \eqref{eq:covariance1} that the covariance between any two observations in the distribution is determined by the similarity through the kernel function $k(x, x')$, namely
+
+$$
+\begin{align}
+     \mathbb{C}[y, y'] = k(x, x')
+\end{align}
+$$
+
+An essential component of a GP is the kernel function with which the covariances is computed.
+Often the kernels are engineered to incorporate prior knowledge.
+A commonly used kernel is the squared exponential kernel
+
+$$
+\begin{align}
+     k(x, x' \ ; \ \theta) = \alpha \exp \left[ - \frac{|| x - x'||^2}{2 \sigma^2}\right], \quad \theta = \{ \alpha, \sigma \}
+\end{align}
+$$
+
+where $\theta$ corresponds to the hyperparameters of the Gaussian process which can be independently optimized with respect to the observations $(X, y)$.
+
+Gaussian Processes can be readily extended to multiple dimensions by simply adjusting the kernel to incorporate multiple dimensions.
+The individual variances $\sigma_i$ of the dimensions $\mathbb{R}^d$ in the exponential kernel can be independently adjusted, or optimized with the maximization of the marginal probability of the data.
+The expanded kernel for multidimensional input is defined as followed:
+
+$$
+\begin{align}
+     k(x, x'; \ \theta) &= \alpha \exp \left[ - \frac{1}{2} (x-x') \Sigma^{-1} (x-x')     \right], \quad \theta=\{ \alpha, \Sigma \} \\
+     \Sigma &= \text{diag}(\sigma^2_0, \sigma^2_1, \ldots, \sigma^2_d)
+\end{align}
+$$
+
+The block matrices $k(\X,\X) \in \mathbb{R}^{N \times N}, k(\X, \Xs) \in \mathbb{R}^{N \times N_*}, k(\Xs, \X) \in \mathbb{R}^{N_* \times N}$ and $k(\Xs, \Xs) \in \mathbb{R}^{N_* \times N_*}$ in \eqref{eq:covariance1} are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
+Furthermore both $k(\X,\X)$ and $k(\Xs,\Xs)$ are symmetric matrices and $k(\X,\Xs)$ and $k(\Xs,\X)$ are each others mutually transposed.
+
+Given the joint distribution $p(\ys, \y, \Xs, \X)$, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $p(\ys \ | \y, \Xs, \X)$.
+In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma in equations (\ref{eq:blockmatrixinversionlemma1} - \ref{eq:blockmatrixinversionlemma-1}) \cite{tylavskyblockmatrixinversionlemma} is used to compute the inverse of the covariance matrix \eqref{eq:covariance1}.
+For ease of reading and brevity the respective block matrices were replaced by more easily readible variables in the following identity:
+\begin{align}
+     \K^{-1}&= \begin{bmatrix}
+          K_{\X\X} & K_{\X\Xs} \\
+          K_{\Xs\X} & K_{\Xs\Xs}
+     \end{bmatrix}^{-1} \label{eq:blockmatrixinversionlemma1} \\
+     & =\begin{bmatrix}
+          A & B \\
+          C & D
+     \end{bmatrix}^{-1} \\
+     &=\begin{bmatrix}
+          A^{-1} + A^{-1}B(D-CA^{-1}B)^{-1}CA^{-1} & -A^{-1}B(D-CA^{-1}B)^{-1} \\
+          -(D-CA^{-1}B)^{-1}CA^{-1} & (D-CA^{-1}B)^{-1}
+     \end{bmatrix} \\
+     &=\begin{bmatrix}
+          A^{-1} + A^{-1}B\Sigma^{-1}CA^{-1} & -A^{-1}B\Sigma^{-1} \\
+          -\Sigma^{-1}CA^{-1} & \Sigma^{-1}
+     \end{bmatrix} \label{eq:Sigma^-1Identity} \\
+     &= \begin{bmatrix}
+          P & Q \\
+          R & S
+     \end{bmatrix} \label{eq:blockmatrixinversionlemma-1} \\
+     \Sigma &= D-CA^{-1}B = K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}
+\end{align}
+Instead of computing the inverse of the entire matrix $\K$, which can be computationally expensive for large covariance matrices, the precision matrix $\K^{-1}$ can be computed block-wise with the block matrix inversion lemma.
+Given the precision matrix in block matrix notation, the inner product in the exponential term of the Gaussian distribution can be computed as a sum over the inner products with the independent block matrices:
+\begin{align}
+     p(\ys, \y, \Xs, \X)
+     &\propto
+     \exp \left[
+     -\frac{1}{2}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}^T
+     \begin{bmatrix}
+          K_{\X\X} & K_{\X\Xs} \\
+          K_{\Xs\X} & K_{\Xs\Xs}
+     \end{bmatrix}^{-1}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}
+     \right] \\
+     &=
+     \exp \left[
+     -\frac{1}{2}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}^T
+     \begin{bmatrix}
+          P & Q \\
+          R & S
+     \end{bmatrix}
+     \begin{bmatrix}
+          \y \\
+          \ys
+     \end{bmatrix}
+     \right] \\
+     &=
+     \exp \left[
+     -\frac{1}{2}
+     \left( \y^TP\y + \y^TQ\ys + \ys^TR\y + \ys^TS\ys
+     \right)
+     \right] \label{eq:jointdist_innersumoverblockmatrices}
+\end{align}
+Since we are only interested in the posterior distribution $p(\ys \ | \y, \Xs, \X)$, terms which do not include $\ys$ in \eqref{eq:jointdist_innersumoverblockmatrices} can be moved into the normalization term.
+The conditional distribution can thus be simplified to %TODO minus in der zweiten Zeile?
+\begin{align}
+     p(\ys\ | \ \y, \Xs, \X)
+     &\propto
+     \exp \left[
+     -\frac{1}{2}
+     \left( -\y^TQ\ys -\ys^TR\y + \ys^TS\ys
+     \right)
+     \right] \\
+     &=
+     \exp \left[
+     -\frac{1}{2}
+     \left( -\y^TA^{-1}B\Sigma^{-1}\ys -\ys^T\Sigma^{-1}CA^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \right)
+     \right] \\
+     &\propto
+     \exp \left[
+     -\frac{1}{2}
+     \left( -2 \ys^T\Sigma^{-1}CA^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \right)
+     \right] \\
+     &\propto
+     \exp \left[
+     -\frac{1}{2}
+     \left( -2 \ys^T\Sigma^{-1}K_{\Xs\X}{K_{\X\X}}^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \right)
+     \right]
+\end{align}
+with the matrices $\Sigma$ being a symmetric matrix by construction, and $B$ and $C$ being each other transposed, namely $C^T=B$, which gives rise to the identity:
+\begin{align}
+     (\y^TA^{-1}B\Sigma^{-1}\ys)^T
+          &= \ys^T(\Sigma^{-1})^TB^T(A^{-1})^T\y \\
+          &= \ys^T\Sigma^{-1}CA^{-1}\y
+\end{align}
+Alternatively one would argue that the result of both inner products yields the same scalar value due to $B=C^T$.
+With the derivations above we obtain a posterior distribution $p(\ys \ | \ \y, \Xs, \X)$ with the mean and covariance function
+\begin{align}
+     \mu(\ys)       &= K_{\Xs\X}{K_{\X\X}}^{-1}\y \\
+     \Sigma(\ys)    &= K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}
+\end{align}
+\begin{figure}[t!]
+     \centering
+     \includegraphics[width=\textwidth]{GP_2Obs.png}
+     \caption{Depiction of a Gaussian Process with two prior obvervations. The red dotted line represents the ground truth, the objective function, while the solid blue line shows the predicted mean of the gaussian process for all datapoints. The blue area around the mean is the 95\% confidence interval that is computed using the variance function.}
+     \label{fig:gp_twoobs}
+\end{figure}
+
+It should be noted that during plotting only the diagonal entries of the covariance matrix are of interest since the diagonal entries of the covariance matrix denote the variances at the evaluated points.
+Given the computation of both the mean and variance of the posterior distribution we obtain a Gaussian distribution:
+\begin{align}
+     p(\ys | \y, \Xs, \X) &= \mathcal{N} \big( \underbrace{K_{\Xs\X} {K_{\X\X}}^{-1} \y}_{\mu}, \underbrace{K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}}_{\Sigma} \big)
+\end{align}
+A visual depiction of a Gaussian process can be seen in Figure \ref{fig:gp_twoobs}.
+
