@@ -186,9 +186,13 @@ $$
 \end{align}
 $$
 
-The block matrices $k(X,X) \in \mathbb{R}^{N \times N}, k(X, X\_*) \in \mathbb{R}^{N \times N\_*}, k(X\_*, X) \in \mathbb{R}^{N\_* \times N}$ and 
+The block matrices $k(X,X) \in \mathbb{R}^{N \times N}$
 
-$k(\Xs, \Xs) \in \mathbb{R}^{N_* \times N_*}$ in \eqref{eq:covariance1} are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
+$ k(X, X\_*) \in \mathbb{R}^{N \times N\_*}, $
+
+$k(X\_*, X) \in \mathbb{R}^{N\_* \times N}$ and 
+
+$k(X\_*, X\_*) \in \mathbb{R}^{N\_* \times N\_*}$ are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
 
 Furthermore both $k(X,X)$ and $k(X\_*, X\_*)$ are symmetric matrices and $k(X,X\_*)$ and $k(X\_*,X)$ are each others mutually transposed.
 
