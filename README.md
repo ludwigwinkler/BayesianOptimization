@@ -82,7 +82,9 @@ for the function $ f $.
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations 
 $ X = \\{ x\_i \\}\_{ i=0 }^N , x\_i \in \mathbb{R}^d$ of the random variables 
 
-$ X \sim \mathcal{N}( \cdot  |  \mu, \Sigma), X \in \mathbb{R}^d $ is a multivariate distribution.
+$ X \sim \mathcal{N}( \cdot  |  \mu, \Sigma)$
+
+$ X \in \mathbb{R}^d $ is a multivariate distribution.
 
 A constraint of Gaussian processes as they are used in machine learning, which can be relaxed in specific cases, is that they are assumed to have a zero mean.
 In order to compute a predictive distribution over $ y\_* $ we initially construct the joint distribution over the training observations $\mathcal{D} = (X,y) $ and test observations $ \mathcal{D}\_* = ( X\_* ,y\_* ) $:
