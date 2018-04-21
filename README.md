@@ -77,7 +77,7 @@ be our training observations of the function $f$.
 
 Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) $
 
-$ \mathcal{D}\_* = ( X\_* , y\_* ) X\_{ * j } $
+$ \mathcal{D}\_* = ( X\_* , y\_* ) = X\_{ * j } , y\_{ * j } $
 
 $ \mathcal{D}\_* = ( X\_* , y\_* ) = \{ ( x_{*j}, y_{*j} ) \} $
 
