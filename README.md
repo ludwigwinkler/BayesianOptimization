@@ -76,8 +76,9 @@ and $y \in \mathbb{R}^{N}$,
 be our training observations of the function $f$.
 
 Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X\_* \in \mathbb{R}^{N\_* \times d} $ and $ y\_* \in \mathbb{R}^{N\_*} $ , 
+be the test observations at which we want to compute the predictive distributions of $ y\_* =f( X\_* ) $ 
 
-be the test observations at which we want to compute the predictive distributions of $ y\_* =f( X\_* ) $ for the function $ f $.
+for the function $ f $.
 
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations $X=\{ x_i \}_{i=0}^N, x_i \in \mathbb{R}^d$ of the random variables $X \sim \mathcal{N}( \cdot  |  \mu, \Sigma), X \in \mathbb{R}^d$ is a multivariate distribution.
 A constraint of Gaussian processes as they are used in machine learning, which can be relaxed in specific cases, is that they are assumed to have a zero mean.
