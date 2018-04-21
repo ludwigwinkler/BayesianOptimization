@@ -79,7 +79,7 @@ Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } )
 
 Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X_* $
 
-Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X\_* $
+Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X\_* $ and $ y\_* $
 
 $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} , X\_* \in \mathbb{R}^{N\_* \times d} $ and with
 
