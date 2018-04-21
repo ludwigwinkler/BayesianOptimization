@@ -75,19 +75,23 @@ A useful property of the Gaussian distribution is that its shape is determined b
 This allows us to omitt the normalization constant and determine the relevant mean and covariance terms from the exponential term.
 
 Let $y=f(x)$, where $x \in \mathbb{R}^d$ and $y \in \mathbb{R}$ be the function which we want to estimate with a Gaussian Process.
-Furthermore, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$
+Furthermore, let $\mathcal{D} = (X, y) = \{(x_i, y_i)\}_{i=0}^N$
 with $X \in$ $\mathbb{R}^{N \times d}$ and $y \in \mathbb{R}^{N}$, be our training observations of the function $f$.
 Lastly, let $\smash{\mathcal{D}_{*} = (X_*, y_*) = \{ (\x_j, y_j) \}_{j=0}^{N_*}$, with $X_* \in \mathbb{R}^{N_* \times d}$ and $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of $y_* =f(X_s)$ for the function $f$.
 
 $$
-\mathcal{D} = (X, y) = \{(x_i, y_i)\}_{i=0} 
+\mathcal{D} = (X, y) = \{(x_i, y_i)\}_{i=0}^N 
 $$
 
-$\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}$
+$\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$
 
 $
-\{x\}_{i=0}^N
+\\{x\\}_{i=0}^N
 $
+$
+\\{x\\}_{i=0}^N
+$
+
 
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations $X=\{ x_i \}_{i=0}^N, x_i \in \mathbb{R}^d$ of the random variables $X \sim \mathcal{N}( \cdot  |  \mu, \Sigma), X \in \mathbb{R}^d$ is a multivariate distribution.
 A constraint of Gaussian processes as they are used in machine learning, which can be relaxed in specific cases, is that they are assumed to have a zero mean.
