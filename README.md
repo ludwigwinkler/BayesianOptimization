@@ -81,29 +81,28 @@ for the function $ f $.
 
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations 
 $ X = \\{ x\_i \\}\_{ i=0 }^N , x\_i \in \mathbb{R}^d$ of the random variables 
-
-$ X \sim \mathcal{N}( \cdot  \|  \mu, \Sigma)$
-
-$ X \in \mathbb{R}^d $ is a multivariate distribution.
+$ X \sim \mathcal{N}( \cdot  \|  \mu, \Sigma),  X \in \mathbb{R}^d $ 
+is a multivariate distribution.
 
 A constraint of Gaussian processes as they are used in machine learning, which can be relaxed in specific cases, is that they are assumed to have a zero mean.
 In order to compute a predictive distribution over $ y\_* $ we initially construct the joint distribution over the training observations $\mathcal{D} = (X,y) $ and test observations $ \mathcal{D}\_* = ( X\_* ,y\_* ) $:
 
+$$
 \begin{align}
-     p(y_*, y, X_*, X) &= \frac{1}{\sqrt{(2 \pi)^{N+N_*} |\K|^2}}
+     p(y\_*, y, X\_* , X) &= \frac{1}{\sqrt{(2 \pi)^{ N+N\_* } |K|^2}}
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
           y \\
-          y_*
+          y\_*
      \end{bmatrix}^T
      \begin{bmatrix}
-          K_{\X\X} & K_{\X\Xs} \\
-          K_{\Xs\X} & K_{\Xs\Xs}
+          K\_{ XX } & K_{ X X\_* } \\
+          K_{ X\_* X } & K_{ X\_* X\_* }
      \end{bmatrix}^{-1}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y\_*
      \end{bmatrix}
      \right] \\
      &\propto
@@ -132,3 +131,4 @@ In order to compute a predictive distribution over $ y\_* $ we initially constru
      \mathbf{0}, \K
      \right)
 \end{align}
+$$
