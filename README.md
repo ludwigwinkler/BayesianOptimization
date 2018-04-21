@@ -74,7 +74,7 @@ with $X \in$ $\mathbb{R}^{N \times d}$
 and $y \in \mathbb{R}^{N}$, 
 be our training observations of the function $f$.
 
-Lastly, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$, with
+Lastly, let $\mathcal{D}_*$ $= ( X_* , y_* )$ $= \\{(x_{* j}, y_{* j})\\}_{i=0}^N$, with
 
 $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N X_*$
 
