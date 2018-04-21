@@ -78,6 +78,8 @@ Let $y=f(x)$, where $x \in \mathbb{R}^d$ and $y \in \mathbb{R}$ be the function 
 Furthermore, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\} $ hello $\{x\}_{i=0}^N$, hello $\{x\}_\{i=0\}^N$ with $X \in$ $\mathbb{R}^{N d}$ and $y \in \mathbb{R}^{N}$, be our training observations of the function $f$.
 Lastly, let $\smash{\mathcal{D}_{*} = (X_*, y_*) = \{ (\x_j, y_j) \}_{j=0}^{N_*}$, with $X_* \in \mathbb{R}^{N_* \times d}$ and $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of $y_* =f(X_s)$ for the function $f$.
 
+$$\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0} $$
+
 $
 \{x\}_{i=0}^N
 $
