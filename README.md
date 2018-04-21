@@ -82,7 +82,7 @@ for the function $ f $.
 A Gaussian process is defined as a stochastic process, such that every finite collection of realizations 
 $ X = \\{ x\_i \\}\_{ i=0 }^N , x\_i \in \mathbb{R}^d$ of the random variables 
 
-$ X \sim \mathcal{N}( \cdot  |  \mu, \Sigma)$
+$ X \sim \mathcal{N}( \cdot  \|  \mu, \Sigma)$
 
 $ X \in \mathbb{R}^d $ is a multivariate distribution.
 
