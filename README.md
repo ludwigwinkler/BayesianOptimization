@@ -75,7 +75,11 @@ with $X \in$ $\mathbb{R}^{N \times d}$
 and $y \in \mathbb{R}^{N}$, 
 be our training observations of the function $f$.
 
-Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} $ with $ X\_* $ and $ y\_* $
+Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} $ with $ X_* $ and $ y_* $
+
+Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X_* $
+
+Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{ N\_* } $ with $ X\_* $
 
 $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} , X\_* \in \mathbb{R}^{N\_* \times d} $ and with
 
