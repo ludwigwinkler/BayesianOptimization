@@ -12,6 +12,11 @@
        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
+\(
+   \def\X{{X}}
+   \def\Xs{{X_* }}
+\)
+
 [Back Home](https://ludwigwinkler.github.io)
 
 ## Introduction
@@ -181,10 +186,13 @@ $$
 \end{align}
 $$
 
-The block matrices $k(\X,\X) \in \mathbb{R}^{N \times N}, k(\X, \Xs) \in \mathbb{R}^{N \times N_*}, k(\Xs, \X) \in \mathbb{R}^{N_* \times N}$ and $k(\Xs, \Xs) \in \mathbb{R}^{N_* \times N_*}$ in \eqref{eq:covariance1} are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
-Furthermore both $k(\X,\X)$ and $k(\Xs,\Xs)$ are symmetric matrices and $k(\X,\Xs)$ and $k(\Xs,\X)$ are each others mutually transposed.
+The block matrices $k(X,X) \in \mathbb{R}^{N \times N}, k(X, X\_*) \in \mathbb{R}^{N \times N\_*}, k(X\_*, X) \in \mathbb{R}^{N\_* \times N}$ and 
 
-Given the joint distribution $ p(y_*, y, X_*, X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y_*  \| y, X_*, X ) $ .
+$k(\Xs, \Xs) \in \mathbb{R}^{N_* \times N_*}$ in \eqref{eq:covariance1} are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
+
+Furthermore both $k(X,X)$ and $k(X\_*, X\_*)$ are symmetric matrices and $k(X,X\_*)$ and $k(X\_*,X)$ are each others mutually transposed.
+
+Given the joint distribution $ p(y\_*, y, X\_*, X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y\_*  \| y, X\_*, X ) $ .
 In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma is used to compute the inverse of the covariance matrix.
 
 For ease of reading and brevity the respective block matrices were replaced by more easily readible variables in the following identity:
@@ -192,7 +200,7 @@ For ease of reading and brevity the respective block matrices were replaced by m
 $$
 \begin{align}
      \K^{-1}&= \begin{bmatrix}
-          K_{\X\X} & K_{\X\Xs} \\
+          K_{ X X} & K_{ X X_*} \\
           K_{\Xs\X} & K_{\Xs\Xs}
      \end{bmatrix}^{-1} \label{eq:blockmatrixinversionlemma1} \\
      & =\begin{bmatrix}
