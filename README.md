@@ -73,7 +73,6 @@ This allows us to omitt the normalization constant and determine the relevant me
 
 Let $y=f(x)$, where $x \in \mathbb{R}^d$ and $y \in \mathbb{R}$ be the function which we want to estimate with a Gaussian Process.
 Furthermore, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$
-
 with $X \in$ $\mathbb{R}^{N \times d}$ 
 
 and $y \in \mathbb{R}^{N}$, 
