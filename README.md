@@ -81,7 +81,7 @@ Lastly, let $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$, with
 
 $\mathcal{D} = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N X_*$
 
-$\mathcal{D} = (X_*, y_*) = \\{(x_{*i}, y_{*i})\\}_{i=0}^N$
+$\mathcal{D} = (X_*, y_*) = \\{(x_j, y_j)\\}_{j=0}^N$
 
 $\mathcal{D}_* = (X, y) = \\{(x_i, y_i)\\}_{i=0}^N$
 
