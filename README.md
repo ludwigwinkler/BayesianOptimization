@@ -85,6 +85,10 @@ $\mathcal{D} = (X_* , y) = \\{(x_j, y_j)\\}_{j=0}^N$
 
 $\mathcal{D} = (X_* , y_* ) = \\{(x_j, y_j)\\}_{j=0}^N$
 
+$\mathcal{D}_* = (X_* , y_* ) = \\{(x_j, y_j)\\}_{j=0}^N$
+
+$\mathcal{D}_* = (X_* , y_* ) = \\{(x_{* j} , y_j)\\}_{j=0}^N$
+
 $\mathcal{D} = (X, y_* ) = \\{(x_j, y_i)\\}_{i=0}^{N_*}$
 
 $X_* \in \mathbb{R}^{N_* \times d}$ 
