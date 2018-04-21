@@ -188,15 +188,15 @@ $$
 
 The block matrices $k(X,X) \in \mathbb{R}^{N \times N}$
 
-$ k(X, X\_*) \in \mathbb{R}^{N \times N\_*}, $
+$ k(X, X\_* ) \in \mathbb{R}^{N \times N\_* }, $
 
-$k(X\_*, X) \in \mathbb{R}^{N\_* \times N}$ and 
+$k( X\_* , X ) \in \mathbb{R}^{ N\_* \times N }$ and 
 
 $k(X\_*, X\_*) \in \mathbb{R}^{N\_* \times N\_*}$ are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
 
-Furthermore both $k(X,X)$ and $k(X\_*, X\_*)$ are symmetric matrices and $k(X,X\_*)$ and $k(X\_*,X)$ are each others mutually transposed.
+Furthermore both $k(X,X)$ and $k( X\_*, X\_* )$ are symmetric matrices and $k( X, X\_* )$ and $k( X\_* ,X)$ are each others mutually transposed.
 
-Given the joint distribution $ p(y\_*, y, X\_*, X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y\_*  \| y, X\_*, X ) $ .
+Given the joint distribution $ p(y\_* , y, X\_* , X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y\_*  \| y, X\_* , X ) $ .
 In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma is used to compute the inverse of the covariance matrix.
 
 For ease of reading and brevity the respective block matrices were replaced by more easily readible variables in the following identity:
