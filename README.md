@@ -77,7 +77,7 @@ be our training observations of the function $f$.
 
 Lastly, let $ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} $ , 
 
-$ X_* \in \mathbb{R}^{N_* \times d} $ and with
+$ \mathcal{D}\_* = ( X\_* , y\_* ) = \\{ ( X\_{ * j } , y\_{ * j } ) \\} \_{j=0}^{N\_*} , X\_* \in \mathbb{R}^{N\_* \times d} $ and with
 
 $y_* \in \mathbb{R}^{N_*}$, be the test observations at which we want to compute the predictive distributions of 
 
