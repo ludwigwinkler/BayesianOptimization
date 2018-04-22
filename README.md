@@ -336,5 +336,5 @@ $$
 
 Here is an image of a Gaussian Process:
 
-![Hi](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Hi](https://raw.githubusercontent.com/ludwigwinkler/BayesianOptimization/gh-pages/docs/GP_2Obs.png)
 
