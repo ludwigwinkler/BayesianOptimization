@@ -13,7 +13,7 @@
 </head>
 
 [Back Home](https://ludwigwinkler.github.io)
-1 2 3 4 5 
+
 ## Introduction
 
 [PDF](https://ludwigwinkler.github.io/BayesianOptimization/Report.pdf)
@@ -267,7 +267,7 @@ $$
 \end{align}
 $$
 
-Since we are only interested in the posterior distribution $p(y\_*  \| y, X\_*, X )$, terms which do not include $ y\_* $ can be moved into the normalization term.
+Since we are only interested in the posterior distribution $p(y\_*  \| y, X\_* , X )$, terms which do not include $ y\_* $ can be moved into the normalization term.
 The conditional distribution can thus be simplified to:
 
 $$
@@ -276,7 +276,7 @@ $$
      &\propto
      \exp \left[
      -\frac{1}{2}
-     \left( -\y^TQy_* - y_*^TRy + y_*^TS y_*
+     \left( -y^TQy_* - y_*^TRy + y_*^TS y_*
      \right)
      \right] \\
      &=
@@ -294,7 +294,7 @@ $$
      &\propto
      \exp \left[
      -\frac{1}{2}
-     \left( -2 \ys^T\Sigma^{-1}K_{X_* X}{K_{ X X }}^{-1} y + y_*^T\Sigma^{-1}y_*
+     \left( -2 y_*^T\Sigma^{-1}K_{X_* X}{K_{ X X }}^{-1} y + y_*^T\Sigma^{-1}y_*
      \right)
      \right]
 \end{align}
@@ -314,7 +314,7 @@ With the derivations above we obtain a posterior distribution $p(y\_*  |  y, X\_
 
 $$
 \begin{align}
-     \mu(y_*)       &= K_{\Xs\X}{K_{\X\X}}^{-1}\y \\
+     \mu(y_*)       &= K_{ X_* X}{K_{XX}}^{-1}y \\
      \Sigma(y_*)    &= K_{ X_* X_* } - K_{ X_* X}{K_{ X X }}^{-1}K_{ X X_*}
 \end{align}
 $$
