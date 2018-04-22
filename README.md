@@ -225,21 +225,21 @@ Given the precision matrix in block matrix notation, the inner product in the ex
 
 $$
 \begin{align}
-     p(y\_* , y, X\_* , X)
+     p(y_* , y, X_* , X)
      &\propto
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}^T
      \begin{bmatrix}
-          K_{XX} & K_{X X\_* } \\
-          K_{X\_* X} & K_{X\_* X\_* }
+          K_{XX} & K_{X X_* } \\
+          K_{X_* X} & K_{X_* X_* }
      \end{bmatrix}^{-1}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}
      \right] \\
      &=
@@ -247,7 +247,7 @@ $$
      -\frac{1}{2}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}^T
      \begin{bmatrix}
           P & Q \\
@@ -255,63 +255,70 @@ $$
      \end{bmatrix}
      \begin{bmatrix}
           y \\
-          y\_*
+          y_*
      \end{bmatrix}
      \right] \\
      &=
      \exp \left[
      -\frac{1}{2}
-     \left( y^TPy + y^TQ y\_* + y\_ { * }^TRy + y \_* ^TS y\_*
+     \left( y^TPy + y^TQ y_* + y_*^TRy + y_* ^TS y_*
      \right)
      \right] \label{eq:jointdist_innersumoverblockmatrices}
 \end{align}
 $$
 
-Since we are only interested in the posterior distribution $p(y_*  \| y, X_*, X)$, terms which do not include $y_*$ can be moved into the normalization term.
+Since we are only interested in the posterior distribution $p(y\_*  \| y, X\_*, X )$, terms which do not include $ y\_* $ can be moved into the normalization term.
 The conditional distribution can thus be simplified to:
 
 $$
 \begin{align}
-     p(y\_* |  y, X\_* , X)
+     p(y_* |  y, X_* , X)
      &\propto
      \exp \left[
      -\frac{1}{2}
-     \left( -\y^TQ\ys -\ys^TR\y + \ys^TS\ys
+     \left( -\y^TQy_* - y_*^TRy + y_*^TS y_*
      \right)
      \right] \\
      &=
      \exp \left[
      -\frac{1}{2}
-     \left( -\y^TA^{-1}B\Sigma^{-1}\ys -\ys^T\Sigma^{-1}CA^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \left( -y^TA^{-1}B\Sigma^{-1} y_* -y_*^T\Sigma^{-1}CA^{-1}y + y_*^T\Sigma^{-1}y_*
      \right)
      \right] \\
      &\propto
      \exp \left[
      -\frac{1}{2}
-     \left( -2 \ys^T\Sigma^{-1}CA^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \left( -2 y_*^T\Sigma^{-1}CA^{-1}y + y_*^T\Sigma^{-1}y_*
      \right)
      \right] \\
      &\propto
      \exp \left[
      -\frac{1}{2}
-     \left( -2 \ys^T\Sigma^{-1}K_{\Xs\X}{K_{\X\X}}^{-1}\y + \ys^T\Sigma^{-1}\ys
+     \left( -2 \ys^T\Sigma^{-1}K_{X_* X}{K_{ X X }}^{-1} y + y_*^T\Sigma^{-1}y_*
      \right)
      \right]
 \end{align}
 $$
 
 with the matrices $\Sigma$ being a symmetric matrix by construction, and $B$ and $C$ being each other transposed, namely $C^T=B$, which gives rise to the identity:
+$$
 \begin{align}
-     (\y^TA^{-1}B\Sigma^{-1}\ys)^T
-          &= \ys^T(\Sigma^{-1})^TB^T(A^{-1})^T\y \\
-          &= \ys^T\Sigma^{-1}CA^{-1}\y
+     (y^TA^{-1}B\Sigma^{-1}y_*)^T
+          &= y_*^T(\Sigma^{-1})^TB^T(A^{-1})^Ty \\
+          &= y_*^T\Sigma^{-1}CA^{-1}y
 \end{align}
+$$
+
 Alternatively one would argue that the result of both inner products yields the same scalar value due to $B=C^T$.
-With the derivations above we obtain a posterior distribution $p(\ys \ | \ \y, \Xs, \X)$ with the mean and covariance function
+With the derivations above we obtain a posterior distribution $p(y\_*  |  y, X\_* , X )$ with the mean and covariance function
+
+$$
 \begin{align}
-     \mu(\ys)       &= K_{\Xs\X}{K_{\X\X}}^{-1}\y \\
-     \Sigma(\ys)    &= K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}
+     \mu(y_*)       &= K_{\Xs\X}{K_{\X\X}}^{-1}\y \\
+     \Sigma(y_*)    &= K_{ X_* X_* } - K_{ X_* X}{K_{ X X }}^{-1}K_{ X X_*}
 \end{align}
+$$
+
 \begin{figure}[t!]
      \centering
      \includegraphics[width=\textwidth]{GP_2Obs.png}
@@ -321,8 +328,11 @@ With the derivations above we obtain a posterior distribution $p(\ys \ | \ \y, \
 
 It should be noted that during plotting only the diagonal entries of the covariance matrix are of interest since the diagonal entries of the covariance matrix denote the variances at the evaluated points.
 Given the computation of both the mean and variance of the posterior distribution we obtain a Gaussian distribution:
+$$
 \begin{align}
-     p(\ys | \y, \Xs, \X) &= \mathcal{N} \big( \underbrace{K_{\Xs\X} {K_{\X\X}}^{-1} \y}_{\mu}, \underbrace{K_{\Xs\Xs} - K_{\Xs\X}{K_{\X\X}}^{-1}K_{\X\Xs}}_{\Sigma} \big)
+     p(y_* | y, X_*, X) &= \mathcal{N} \big( \underbrace{K_{X_* X} {K_{XX}}^{-1} y}_{\mu}, \underbrace{K_{X_* X_*} - K_{X_* X}{K_{X X}}^{-1}K_{X X_*}}_{\Sigma} \big)
 \end{align}
+$$
+
 A visual depiction of a Gaussian process can be seen in Figure \ref{fig:gp_twoobs}.
 
