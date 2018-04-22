@@ -334,5 +334,7 @@ $$
 \end{align}
 $$
 
-A visual depiction of a Gaussian process can be seen in Figure \ref{fig:gp_twoobs}.
+Here is an image of a Gaussian Process:
+
+![alt text](https://github.com/ludwigwinkler/BayesianOptimization/blob/gh-pages/docs/GP_2Obs.png)
 
