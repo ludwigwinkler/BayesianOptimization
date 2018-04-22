@@ -12,16 +12,12 @@
        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
-\(
-   \def\X{{X}}
-   \def\Xs{{X_* }}
-\)
-
 [Back Home](https://ludwigwinkler.github.io)
 
 ## Introduction
 
 [PDF](https://ludwigwinkler.github.io/BayesianOptimization/Report.pdf)
+
 Many problems in science and engineering can be formulated as a mathematical optimization problem in which an optimal solution is sought, either locally or globally.
 The field of global optimization is the application of applied mathematics and numerical analysis towards finding the overall optimal solution in a set of candidate solutions.
 Local optimization is considered an easier problem, in which it suffices to find an optimum which is optimal with respect to its immediate vicinity.
@@ -192,7 +188,7 @@ $ k(X, X\_* ) \in \mathbb{R}^{N \times N\_* }, $
 
 $k( X\_* , X ) \in \mathbb{R}^{ N\_* \times N }$ and 
 
-$k(X\_*, X\_*) \in \mathbb{R}^{N\_* \times N\_*}$ are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
+$k(X\_* , X\_* ) \in \mathbb{R}^{N\_* \times N\_* }$ are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
 
 Furthermore both $k(X,X)$ and $k( X\_*, X\_* )$ are symmetric matrices and $k( X, X\_* )$ and $k( X\_* ,X)$ are each others mutually transposed.
 
