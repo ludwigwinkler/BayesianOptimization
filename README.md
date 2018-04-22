@@ -187,7 +187,7 @@ $ k(X, X\_* ) \in \mathbb{R}^{N \times N\_* }, $
 $k( X\_* , X ) \in \mathbb{R}^{ N\_* \times N }$ and 
 $k(X\_* , X\_* ) \in \mathbb{R}^{N\_* \times N\_* }$ are the Gramian matrices of the training and test observations with respect to the kernel $k(x, x')$.
 
-Furthermore both $k(X,X)$ and $k( X\_*, X\_* )$ are symmetric matrices and $k( X, X\_* )$ and $k( X\_* ,X)$ are each others mutually transposed.
+Furthermore both $k(X,X)$ and $k( X\_* , X\_* )$ are symmetric matrices and $k( X, X\_* )$ and $k( X\_* ,X)$ are each others mutually transposed.
 
 Given the joint distribution $ p(y\_* , y, X\_* , X) $, the aim for modeling the training and test observations with a GP is to derive the posterior distribution $ p( y\_*  \| y, X\_* , X ) $ .
 In order to derive the mean and covariance function of the posterior distribution, the block matrix inversion lemma is used to compute the inverse of the covariance matrix.
@@ -196,7 +196,7 @@ For ease of reading and brevity the respective block matrices were replaced by m
 
 $$
 \begin{align}
-     \K^{-1}&= \begin{bmatrix}
+     K^{-1}&= \begin{bmatrix}
           K_{ X X} & K_{ X X_* } \\
           K_{ X\_* X} & K_{X\_* X\_* }
      \end{bmatrix}^{-1} \label{eq:blockmatrixinversionlemma1} \\
@@ -220,48 +220,48 @@ $$
 \end{align}
 $$
 
-Instead of computing the inverse of the entire matrix $\K$, which can be computationally expensive for large covariance matrices, the precision matrix $\K^{-1}$ can be computed block-wise with the block matrix inversion lemma.
+Instead of computing the inverse of the entire matrix $K$, which can be computationally expensive for large covariance matrices, the precision matrix $K^{-1}$ can be computed block-wise with the block matrix inversion lemma.
 Given the precision matrix in block matrix notation, the inner product in the exponential term of the Gaussian distribution can be computed as a sum over the inner products with the independent block matrices:
 
 $$
 \begin{align}
-     p(\ys, \y, \Xs, \X)
+     p(y\_* , y, X\_* , X)
      &\propto
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y\_*
      \end{bmatrix}^T
      \begin{bmatrix}
-          K_{\X\X} & K_{\X\Xs} \\
-          K_{\Xs\X} & K_{\Xs\Xs}
+          K_{XX} & K_{X X\_* } \\
+          K_{X\_* X} & K_{X\_* X\_* }
      \end{bmatrix}^{-1}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y\_*
      \end{bmatrix}
      \right] \\
      &=
      \exp \left[
      -\frac{1}{2}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y\_*
      \end{bmatrix}^T
      \begin{bmatrix}
           P & Q \\
           R & S
      \end{bmatrix}
      \begin{bmatrix}
-          \y \\
-          \ys
+          y \\
+          y\_*
      \end{bmatrix}
      \right] \\
      &=
      \exp \left[
      -\frac{1}{2}
-     \left( \y^TP\y + \y^TQ\ys + \ys^TR\y + \ys^TS\ys
+     \left( y^TPy + y^TQ y\_* + y\_ { * }^TRy + y \_* ^TS y\_*
      \right)
      \right] \label{eq:jointdist_innersumoverblockmatrices}
 \end{align}
@@ -272,7 +272,7 @@ The conditional distribution can thus be simplified to:
 
 $$
 \begin{align}
-     p(\ys\ | \ \y, \Xs, \X)
+     p(y\_* |  y, X\_* , X)
      &\propto
      \exp \left[
      -\frac{1}{2}
