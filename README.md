@@ -319,13 +319,6 @@ $$
 \end{align}
 $$
 
-\begin{figure}[t!]
-     \centering
-     \includegraphics[width=\textwidth]{GP_2Obs.png}
-     \caption{Depiction of a Gaussian Process with two prior obvervations. The red dotted line represents the ground truth, the objective function, while the solid blue line shows the predicted mean of the gaussian process for all datapoints. The blue area around the mean is the 95\% confidence interval that is computed using the variance function.}
-     \label{fig:gp_twoobs}
-\end{figure}
-
 It should be noted that during plotting only the diagonal entries of the covariance matrix are of interest since the diagonal entries of the covariance matrix denote the variances at the evaluated points.
 Given the computation of both the mean and variance of the posterior distribution we obtain a Gaussian distribution:
 $$
